@@ -25,11 +25,11 @@ const Card = ({ asteroid, showParam, cart, setCart }: Props) => {
   const handleOrder = (id: string) => {
     if (isInCart) {
       const newCart = cart.filter((str) => str !== id);
-      // localStorage.setItem("cart", JSON.stringify(newCart));
+      localStorage.setItem("cart", JSON.stringify(newCart));
       setCart(newCart);
     } else {
       setCart((prevState) => [...prevState, id]);
-      // localStorage.setItem("cart", JSON.stringify([...cart, id]));
+      localStorage.setItem("cart", JSON.stringify([...cart, id]));
     }
   };
 
