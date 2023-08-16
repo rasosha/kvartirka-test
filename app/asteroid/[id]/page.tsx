@@ -1,0 +1,89 @@
+import Link from "next/link";
+import getAsteroid from "../../actions/getAsteroid";
+
+export default async function Page({ params }: { params: { id: string } }) {
+  const asteroid = await getAsteroid(params.id);
+  const closures = asteroid?.close_approach_data.sort((a, b) => {
+    const timeA = a.close_approach_date_full;
+    const timeB = b.close_approach_date_full;
+    return timeA.localeCompare(timeB);
+  });
+  const diameter = Math.ceil(
+    (asteroid!.estimated_diameter.meters.estimated_diameter_min +
+      asteroid!.estimated_diameter.meters.estimated_diameter_max) /
+      2,
+  );
+  const bodies: { [key: string]: string } = {
+    Earth: "Земли",
+    Venus: "Венеры",
+    Mars: "Марса",
+    Moon: "Луны",
+    Merc: "Меркурия",
+    Juptr: "Юпитера",
+  };
+
+  return (
+    <>
+      <main className="m-auto flex flex-col items-center">
+        <Link href={"/"}>{"❰ На главную"}</Link>
+        <div className="flex items-center">
+          <div>
+            {/* <Image
+                src="/arrow.svg"
+                alt="delimiter"
+                width={150}
+                height={32}
+              /> */}
+          </div>
+          <div className="flex flex-col items-center">
+            <p className="border-b-[1px] font-bold">{asteroid!.name.replace(/[()]/g, "")}</p>
+            <p className="text-[12px]">Ø {diameter} м</p>
+          </div>
+        </div>
+        <div className="flex gap-4">
+          <p className="flex">{asteroid!.is_potentially_hazardous_asteroid ? "⚠️Опасен" : ""}</p>
+        </div>
+        <div>
+          {closures!.map((closure) => {
+            return (
+              <div
+                key={closure.epoch_date_close_approach}
+                className="m-4 border-2 border-[--myOrange] p-4"
+              >
+                <p>{"Время максимального сближения с Землей: " + closure.close_approach_date_full}</p>
+                <p>
+                  {"Расстояние до Земли: ≈" +
+                    Math.round(+closure.miss_distance.kilometers)
+                      .toString()
+                      .replace(/(\d)(?=(\d{3})+$)/g, "$1 ") +
+                    "км"}
+                </p>
+                <p>
+                  {"Скорость относительно Земли: ≈" +
+                    (+closure.relative_velocity.kilometers_per_second).toFixed(3) +
+                    " " +
+                    "км/с"}{" "}
+                </p>
+                <p>
+                  {`Летит по орбите вокруг ${
+                    bodies.hasOwnProperty(closure.orbiting_body)
+                      ? bodies[`${closure.orbiting_body}`]
+                      : closure.orbiting_body
+                  }`}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </main>
+    </>
+  );
+}
+
+// данные астероида
+// список всех его сближений.
+// По каждому сближению:
+//   ,
+//   ,
+//   ,
+//     по орбите вокруг чего летит.
