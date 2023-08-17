@@ -63,7 +63,7 @@ const Card = ({ asteroid, showParam, cart, setCart }: Props) => {
           alt={diameter < 50 ? "small asteroid image" : "big asteroid image"}
           width={diameter < 50 ? 22 : 36}
           height={diameter < 50 ? 24 : 40}
-          className="mx-4 flex-0"
+          className="flex-0 mx-4"
         />
         <Link href={`/asteroid/${asteroid.id}`}>
           <div className="flex flex-col items-start">
@@ -74,7 +74,7 @@ const Card = ({ asteroid, showParam, cart, setCart }: Props) => {
       </div>
       <div className="flex gap-4">
         <button
-          className={`rounded-[16px] bg-[#F8660026] px-[11px] py-[2px] uppercase text-[11px] hover:bg-[--myOrange] hover:text-[#fff] font-bold ${
+          className={`rounded-[16px] bg-[#F8660026] px-[11px] py-[2px] text-[11px] font-bold uppercase hover:bg-[--myOrange] hover:text-[#fff] ${
             isInCart ? "text-[#F5DED9]" : "text-[--myOrange]"
           }`}
           onClick={() => handleOrder(asteroid.id)}

@@ -51,9 +51,9 @@ const List = ({ setCart, cart }: ListParams) => {
 
   return (
     <div className="z-10">
-      <div className="mb-4 w-[400px] flex flex-col items-start">
+      <div className="mb-4 flex w-[400px] flex-col items-start">
         <p className="text-[28px]">Ближайшие подлёты астероидов</p>
-        <ul className="flex gap-4 list-none no-underline">
+        <ul className="flex list-none gap-4 no-underline">
           <li
             onClick={() => setShowParam("km")}
             className={`cursor-pointer${showParam === "km" ? " underline" : ""}`}
@@ -100,7 +100,7 @@ const List = ({ setCart, cart }: ListParams) => {
         {!isLoading && (
           <button
             onClick={() => setIsLoading(true)}
-            className="rounded-[24px] bg-[--myOrange] px-[16px] py-[8px] text-[16px] capitalize self-center mt-4 h-[48px] font-bold"
+            className="mt-4 h-[48px] self-center rounded-[24px] bg-[--myOrange] px-[16px] py-[8px] text-[16px] font-bold capitalize"
           >
             Загрузить ещё
           </button>

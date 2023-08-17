@@ -50,7 +50,9 @@ export default async function Page({ params }: { params: { id: string } }) {
                 key={closure.epoch_date_close_approach}
                 className="m-4 border-2 border-[--myOrange] p-4"
               >
-                <p>{"Время максимального сближения с Землей: " + closure.close_approach_date_full}</p>
+                <p>
+                  {"Время максимального сближения с Землей: " + closure.close_approach_date_full}
+                </p>
                 <p>
                   {"Расстояние до Земли: ≈" +
                     Math.round(+closure.miss_distance.kilometers)
