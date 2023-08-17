@@ -1,3 +1,5 @@
+"use client";
+
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import getData from "../actions/getData";
 import { IFetchData, NearEarthObject } from "../types";
@@ -5,17 +7,17 @@ import Card from "./Card";
 
 type ShowParam = "km" | "moon";
 type ListParams = {
-  data: IFetchData;
-  cart: string[];
-  setCart: Dispatch<SetStateAction<string[]>>;
+  data: IFetchData | undefined;
 };
 
-const List = () => {
+const List = ({ data }: ListParams) => {
   const [showParam, setShowParam] = useState<ShowParam>("km");
   const [onlyHazard, setOnlyHazard] = useState(false);
   const [nextPage, setNextPage] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [asteroids, setAsteroids] = useState<NearEarthObject[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [asteroids, setAsteroids] = useState<NearEarthObject[]>(
+    Object.values(data!.near_earth_objects)[0],
+  );
 
   useEffect(() => {
     if (isLoading) {

@@ -3,6 +3,7 @@ import MainPage from "./components/MainPage";
 
 export default async function Home() {
   const data = await getData();
+  // console.log(":>>", data?.element_count);
 
   return (
     <>

@@ -11,7 +11,7 @@ const apiKey = "jF07lzjoe9FuoejNAHrImhJW7xkPhYYhm7nQhkqV";
 const getData = async (nextUrl = ""): Promise<IFetchData | undefined> => {
   const newUrl = nextUrl || `${url}?start_date=${start}&end_date=${end}&api_key=${apiKey}`;
   try {
-    const data = await fetch(newUrl, { cache: "no-store", next: { revalidate: 60 } });
+    const data = await fetch(newUrl, { next: { revalidate: 60 } });
     return await data.json();
   } catch (error) {
     console.error("An error occurred while fetching data:", error);

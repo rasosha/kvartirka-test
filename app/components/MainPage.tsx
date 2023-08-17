@@ -1,18 +1,21 @@
 "use client";
 
-import { IFetchData } from "../types";
+import { IFetchData, NearEarthObjects } from "../types";
 import Image from "next/image";
 import List from "../components/List";
 import Cart from "../components/Cart";
-import { useState } from "react";
+import { useEffect } from "react";
 
 type ListParams = {
   data: IFetchData | undefined;
 };
 
 const MainPage = ({ data }: ListParams) => {
-  const [cart, setCart] = useState(data ? data.near_earth_objects : []);
-  const [asteroids, setAsteroids] = useState(data ? data.near_earth_objects : []);
+  // useEffect(() => {
+  console.log("data:>>", data?.element_count);
+  // }, [data]);
+
+  const asteroidsData = data?.near_earth_objects[0];
 
   return (
     <main className="relative flex justify-center">
@@ -22,9 +25,10 @@ const MainPage = ({ data }: ListParams) => {
           src={"/planeta_lg.jpg"}
           width={400}
           height={620}
+          priority
         />
       </section>
-      <List />
+      <List data={data} />
       <section className="fixed right-[300px] top-[140px]">
         <Cart />
       </section>
