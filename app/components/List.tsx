@@ -1,15 +1,16 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import getData from "../actions/getData";
-import { NearEarthObject } from "../types";
+import { IFetchData, NearEarthObject } from "../types";
 import Card from "./Card";
 
 type ShowParam = "km" | "moon";
 type ListParams = {
+  data: IFetchData;
   cart: string[];
   setCart: Dispatch<SetStateAction<string[]>>;
 };
 
-const List = ({ setCart, cart }: ListParams) => {
+const List = () => {
   const [showParam, setShowParam] = useState<ShowParam>("km");
   const [onlyHazard, setOnlyHazard] = useState(false);
   const [nextPage, setNextPage] = useState("");
@@ -91,8 +92,6 @@ const List = ({ setCart, cart }: ListParams) => {
             <Card
               asteroid={asteroid}
               showParam={showParam}
-              cart={cart}
-              setCart={setCart}
               key={asteroid.id}
             />
           ))}

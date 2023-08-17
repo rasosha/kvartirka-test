@@ -8,11 +8,11 @@ import Link from "next/link";
 type Props = {
   asteroid: NearEarthObject;
   showParam: "km" | "moon";
-  cart: string[];
-  setCart: Dispatch<SetStateAction<string[]>>;
+  // cart: string[];
+  // setCart: Dispatch<SetStateAction<string[]>>;
 };
 
-const Card = ({ asteroid, showParam, cart, setCart }: Props) => {
+const Card = ({ asteroid, showParam }: Props) => {
   const date = getDate(asteroid.close_approach_data[0].close_approach_date_full);
   const distance = asteroid.close_approach_data[0].miss_distance;
   const diameter = Math.ceil(
@@ -20,17 +20,17 @@ const Card = ({ asteroid, showParam, cart, setCart }: Props) => {
       asteroid.estimated_diameter.meters.estimated_diameter_max) /
       2,
   );
-  const isInCart = cart.find((id) => id === asteroid.id);
+  // const isInCart = cart.find((id) => id === asteroid.id);
 
   const handleOrder = (id: string) => {
-    if (isInCart) {
-      const newCart = cart.filter((str) => str !== id);
-      localStorage.setItem("cart", JSON.stringify(newCart));
-      setCart(newCart);
-    } else {
-      setCart((prevState) => [...prevState, id]);
-      localStorage.setItem("cart", JSON.stringify([...cart, id]));
-    }
+    // if (isInCart) {
+    // const newCart = cart.filter((str) => str !== id);
+    // localStorage.setItem("cart", JSON.stringify(newCart));
+    // setCart(newCart);
+    // } else {
+    // setCart((prevState) => [...prevState, id]);
+    // localStorage.setItem("cart", JSON.stringify([...cart, id]));
+    // }
   };
 
   return (
@@ -73,14 +73,14 @@ const Card = ({ asteroid, showParam, cart, setCart }: Props) => {
         </Link>
       </div>
       <div className="flex gap-4">
-        <button
+        {/* <button
           className={`rounded-[16px] bg-[#F8660026] px-[11px] py-[2px] text-[11px] font-bold uppercase hover:bg-[--myOrange] hover:text-[#fff] ${
             isInCart ? "text-[#F5DED9]" : "text-[--myOrange]"
           }`}
           onClick={() => handleOrder(asteroid.id)}
         >
           {isInCart ? "в корзине" : "заказать"}
-        </button>
+        </button> */}
         <p className="flex">{asteroid.is_potentially_hazardous_asteroid ? "⚠️Опасен" : ""}</p>
       </div>
     </div>
