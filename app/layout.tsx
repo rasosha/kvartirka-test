@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             priority
           />
         </section>
-        <>{children}</>
+        {children}
       </body>
     </html>
   );
