@@ -45,14 +45,14 @@ const Cart = ({ data, cart }: CartProps) => {
       <p className="p-4 pt-0">
         {getCorrectSuffix(cart?.length, ["астероид", "астероида", "астероидов"])}
       </p>
-      {/* <Link
+      <Link
         href={isActive ? { pathname: "/cart", query: { asteroid: asteroids } } : ""}
         className={`mt-4 self-center rounded-[24px] px-[16px] py-[8px] text-[16px] font-bold capitalize ${
           isActive ? "bg-[--myOrange]" : "bg-gray-600 hover:cursor-default"
         }`}
       >
         отправить
-      </Link> */}
+      </Link>
     </section>
   );
 };
