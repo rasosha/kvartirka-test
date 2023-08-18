@@ -21,7 +21,7 @@ const List = ({ data }: { data: IFetchData | undefined }) => {
         const newData = await getData(nextPage);
         if (newData) {
           const NEO = sortAsteroid(Object.values(newData["near_earth_objects"])[0]);
-          setNextPage(newData["links"]["next"]);
+          setNextPage(newData["links"]["next"].replace("http", "https"));
           setAsteroids((prevState) => [...prevState, ...NEO]);
         }
         setIsLoading(false);
