@@ -4,32 +4,32 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import getData from "../actions/getData";
 import { IFetchData, NearEarthObject } from "../types";
 import Card from "./Card";
+import Cart from "./Cart";
+import sortAsteroid from "../actions/sortAsteroids";
+import Spinner from "./Spinner";
 
-type ShowParam = "km" | "moon";
 type ListParams = {
   data: IFetchData | undefined;
 };
 
 const List = ({ data }: ListParams) => {
-  const [showParam, setShowParam] = useState<ShowParam>("km");
+  const [showParam, setShowParam] = useState<"km" | "moon">("km");
   const [onlyHazard, setOnlyHazard] = useState(false);
-  const [nextPage, setNextPage] = useState("");
+  const [nextPage, setNextPage] = useState(data!.links.next);
   const [isLoading, setIsLoading] = useState(false);
+  const [cart, setCart] = useState<string[]>([]);
   const [asteroids, setAsteroids] = useState<NearEarthObject[]>(
-    Object.values(data!.near_earth_objects)[0],
+    sortAsteroid(Object.values(data!.near_earth_objects)[0]),
   );
 
   useEffect(() => {
     if (isLoading) {
       const getNewData = async () => {
-        const data = nextPage ? await getData(nextPage) : await getData();
-        if (data) {
-          const NEO = Object.values(data["near_earth_objects"])[0].sort((a, b) => {
-            const timeA = a.close_approach_data[0].close_approach_date_full.split(" ")[1];
-            const timeB = b.close_approach_data[0].close_approach_date_full.split(" ")[1];
-            return timeA.localeCompare(timeB);
-          });
-          setNextPage(data["links"]["next"]);
+        const newData = await getData(nextPage);
+        if (newData) {
+          const NEO = sortAsteroid(Object.values(newData["near_earth_objects"])[0]);
+          // console.log("downloaded :>>", Object.keys(newData.near_earth_objects)[0]);
+          setNextPage(newData["links"]["next"]);
           setAsteroids((prevState) => [...prevState, ...NEO]);
         }
         setIsLoading(false);
@@ -47,67 +47,82 @@ const List = ({ data }: ListParams) => {
 
   const handleScroll = () => {
     const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
-    if (scrollHeight - scrollTop - clientHeight < 100) {
+    if (scrollHeight - scrollTop - clientHeight < 200) {
       setIsLoading(true);
     }
   };
 
   return (
-    <div className="z-10">
-      <div className="mb-4 flex w-[400px] flex-col items-start">
-        <p className="text-[28px]">Ближайшие подлёты астероидов</p>
-        <ul className="flex list-none gap-4 no-underline">
-          <li
-            onClick={() => setShowParam("km")}
-            className={`cursor-pointer${showParam === "km" ? " underline" : ""}`}
-          >
-            в километрах
-          </li>
-          <li>|</li>
-          <li
-            onClick={() => setShowParam("moon")}
-            className={`cursor-pointer${showParam === "moon" ? " underline" : ""}`}
-          >
-            в лунных орбитах
-          </li>
-        </ul>
-        <label>
-          <input
-            type="checkbox"
-            className="mr-2"
-            checked={onlyHazard}
-            onChange={() => setOnlyHazard((prevState) => !prevState)}
-          />
-          Показать только опасные
-        </label>
-      </div>
-      <div className="flex flex-col gap-6">
-        {asteroids
-          .filter((asteroid) => {
-            if (onlyHazard) {
-              return asteroid.is_potentially_hazardous_asteroid === true;
-            } else {
-              return asteroid;
-            }
-          })
-          .map((asteroid) => (
-            <Card
-              asteroid={asteroid}
-              showParam={showParam}
-              key={asteroid.id}
+    <main className="relative flex justify-center">
+      <section className="z-10">
+        <div className="mb-4 flex w-[400px] flex-col items-start">
+          <p className="text-[28px]">Ближайшие подлёты астероидов</p>
+          <ul className="flex list-none gap-4 no-underline">
+            <li
+              onClick={() => setShowParam("km")}
+              className={`cursor-pointer${showParam === "km" ? " underline" : ""}`}
+            >
+              в километрах
+            </li>
+            <li>|</li>
+            <li
+              onClick={() => setShowParam("moon")}
+              className={`cursor-pointer${showParam === "moon" ? " underline" : ""}`}
+            >
+              в лунных орбитах
+            </li>
+          </ul>
+          <label className="my-2">
+            <input
+              type="checkbox"
+              className="mr-2"
+              checked={onlyHazard}
+              onChange={() => setOnlyHazard((prevState) => !prevState)}
             />
-          ))}
-        {isLoading && <p className="self-center">Загрузка...</p>}
-        {!isLoading && (
-          <button
-            onClick={() => setIsLoading(true)}
-            className="mt-4 h-[48px] self-center rounded-[24px] bg-[--myOrange] px-[16px] py-[8px] text-[16px] font-bold capitalize"
-          >
-            Загрузить ещё
-          </button>
-        )}
-      </div>
-    </div>
+            Показать только опасные
+          </label>
+        </div>
+        <div className="flex flex-col gap-6">
+          {asteroids
+            .filter((asteroid) => {
+              if (onlyHazard) {
+                return asteroid.is_potentially_hazardous_asteroid === true;
+              } else {
+                return asteroid;
+              }
+            })
+            .map((asteroid) => (
+              <Card
+                asteroid={asteroid}
+                showParam={showParam}
+                key={asteroid.id}
+                cart={cart}
+                setCart={setCart}
+              />
+            ))}
+          {isLoading ? (
+            <div className="flex flex-col items-center">
+              <Spinner />
+              <p className="self-center pb-6">Загрузка...</p>
+            </div>
+          ) : (
+            <button
+              onClick={() => setIsLoading(true)}
+              className="mt-4 h-[48px] self-center rounded-[24px] bg-[--myOrange] px-[16px] py-[8px] text-[16px] font-bold capitalize"
+            >
+              Загрузить ещё
+            </button>
+          )}
+        </div>
+      </section>
+      <section className="fixed right-[300px] top-[140px] ">
+        <Cart
+          data={data}
+          cart={cart}
+          setCart={setCart}
+        />
+      </section>
+    </main>
   );
 };
 

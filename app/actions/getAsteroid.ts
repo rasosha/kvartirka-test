@@ -1,8 +1,7 @@
 import { NearEarthObject } from "../types";
 
 const url = "https://api.nasa.gov/neo/rest/v1/neo";
-const apiKey = "jF07lzjoe9FuoejNAHrImhJW7xkPhYYhm7nQhkqV";
-// const apiKey = "OR789hE5VWcm0ThLrZAIsF4xAmf2G4vR1brpTeCv";
+const apiKey = process.env.API_KEY;
 
 const getAsteroid = async (id: string): Promise<NearEarthObject | undefined> => {
   const newUrl = `${url}/${id}?api_key=${apiKey}`;

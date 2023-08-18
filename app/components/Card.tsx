@@ -5,14 +5,14 @@ import getCorrectSuffix from "../actions/getCorrectSuffix";
 import getDate from "../actions/getDate";
 import Link from "next/link";
 
-type Props = {
+type CardParams = {
   asteroid: NearEarthObject;
   showParam: "km" | "moon";
-  // cart: string[];
-  // setCart: Dispatch<SetStateAction<string[]>>;
+  cart: string[];
+  setCart: Dispatch<SetStateAction<string[]>>;
 };
 
-const Card = ({ asteroid, showParam }: Props) => {
+const Card = ({ asteroid, showParam, cart, setCart }: CardParams) => {
   const date = getDate(asteroid.close_approach_data[0].close_approach_date_full);
   const distance = asteroid.close_approach_data[0].miss_distance;
   const diameter = Math.ceil(
@@ -20,22 +20,24 @@ const Card = ({ asteroid, showParam }: Props) => {
       asteroid.estimated_diameter.meters.estimated_diameter_max) /
       2,
   );
-  // const isInCart = cart.find((id) => id === asteroid.id);
+  const isInCart = cart.find((id) => id === asteroid.id);
 
   const handleOrder = (id: string) => {
-    // if (isInCart) {
-    // const newCart = cart.filter((str) => str !== id);
-    // localStorage.setItem("cart", JSON.stringify(newCart));
-    // setCart(newCart);
-    // } else {
-    // setCart((prevState) => [...prevState, id]);
-    // localStorage.setItem("cart", JSON.stringify([...cart, id]));
-    // }
+    if (isInCart) {
+      const newCart = cart.filter((str) => str !== id);
+      localStorage.setItem("cart", JSON.stringify(newCart));
+      setCart(newCart);
+    } else {
+      setCart((prevState) => [...prevState, id]);
+      localStorage.setItem("cart", JSON.stringify([...cart, id]));
+    }
   };
 
   return (
-    <div className="w-[400px]">
-      <p className="text-[24px] font-bold">{date}</p>
+    <div className="w-[400px] bg-black">
+      <Link href={`/asteroid/${asteroid.id}`}>
+        <p className="text-[24px] font-bold hover:underline">{date}</p>
+      </Link>
       <div className="flex items-center">
         <div>
           <p className="flex flex-col items-center">
@@ -73,14 +75,14 @@ const Card = ({ asteroid, showParam }: Props) => {
         </Link>
       </div>
       <div className="flex gap-4">
-        {/* <button
+        <button
           className={`rounded-[16px] bg-[#F8660026] px-[11px] py-[2px] text-[11px] font-bold uppercase hover:bg-[--myOrange] hover:text-[#fff] ${
             isInCart ? "text-[#F5DED9]" : "text-[--myOrange]"
           }`}
           onClick={() => handleOrder(asteroid.id)}
         >
           {isInCart ? "в корзине" : "заказать"}
-        </button> */}
+        </button>
         <p className="flex">{asteroid.is_potentially_hazardous_asteroid ? "⚠️Опасен" : ""}</p>
       </div>
     </div>

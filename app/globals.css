@@ -5,3 +5,7 @@
 :root {
   --myOrange: #f86600;
 }
+
+html {
+  overflow-y: scroll;
+}

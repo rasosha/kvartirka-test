@@ -25,16 +25,8 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <>
       <main className="m-auto flex flex-col items-center">
-        <Link href={"/"}>{"❰ На главную"}</Link>
+        <Link href={"/"}>{"❰ Назад к списку"}</Link>
         <div className="flex items-center">
-          <div>
-            {/* <Image
-                src="/arrow.svg"
-                alt="delimiter"
-                width={150}
-                height={32}
-              /> */}
-          </div>
           <div className="flex flex-col items-center">
             <p className="border-b-[1px] font-bold">{asteroid!.name.replace(/[()]/g, "")}</p>
             <p className="text-[12px]">Ø {diameter} м</p>
@@ -81,11 +73,3 @@ export default async function Page({ params }: { params: { id: string } }) {
     </>
   );
 }
-
-// данные астероида
-// список всех его сближений.
-// По каждому сближению:
-//   ,
-//   ,
-//   ,
-//     по орбите вокруг чего летит.
