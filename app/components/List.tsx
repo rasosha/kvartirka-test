@@ -21,7 +21,8 @@ const List = ({ data }: { data: IFetchData | undefined }) => {
         const newData = await getData(nextPage);
         if (newData) {
           const NEO = sortAsteroid(Object.values(newData["near_earth_objects"])[0]);
-          setNextPage(newData["links"]["next"].replace("http://api.nasa", "https://api.nasa"));
+          const next = newData["links"]["next"].replace("http://api.nasa", "https://api.nasa");
+          setNextPage(next);
           setAsteroids((prevState) => [...prevState, ...NEO]);
         }
         setIsLoading(false);
@@ -71,8 +72,7 @@ const List = ({ data }: { data: IFetchData | undefined }) => {
         />
         Показать только опасные
       </label>
-      {/* </section> */}
-      <div className="flex flex-col gap-6">
+      <div className="mb-[86px] flex flex-col gap-6">
         {asteroids
           .filter((asteroid) => {
             if (onlyHazard) {
@@ -91,7 +91,7 @@ const List = ({ data }: { data: IFetchData | undefined }) => {
         {isLoading ? (
           <div className="flex flex-col items-center">
             <Spinner />
-            <p className="self-center pb-6">Загрузка...</p>
+            <p className="self-center p-6">Загрузка...</p>
           </div>
         ) : (
           <button
