@@ -22,6 +22,7 @@ const List = ({ data }: { data: IFetchData | undefined }) => {
         if (newData) {
           const NEO = sortAsteroid(Object.values(newData["near_earth_objects"])[0]);
           const next = newData["links"]["next"].replace("http://api.nasa", "https://api.nasa");
+          console.log("next:>>", next);
           setNextPage(next);
           setAsteroids((prevState) => [...prevState, ...NEO]);
         }
@@ -29,7 +30,7 @@ const List = ({ data }: { data: IFetchData | undefined }) => {
       };
       getNewData();
     }
-  }, [isLoading]);
+  }, [isLoading, nextPage]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
