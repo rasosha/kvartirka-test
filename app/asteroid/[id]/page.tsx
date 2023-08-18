@@ -36,38 +36,39 @@ export default async function Page({ params }: { params: { id: string } }) {
           <p className="flex">{asteroid!.is_potentially_hazardous_asteroid ? "⚠️Опасен" : ""}</p>
         </div>
         <div>
-          {closures!.map((closure) => {
-            return (
-              <div
-                key={closure.epoch_date_close_approach}
-                className="m-4 border-2 border-[--myOrange] p-4"
-              >
-                <p>
-                  {"Время максимального сближения с Землей: " + closure.close_approach_date_full}
-                </p>
-                <p>
-                  {"Расстояние до Земли: ≈" +
-                    Math.round(+closure.miss_distance.kilometers)
-                      .toString()
-                      .replace(/(\d)(?=(\d{3})+$)/g, "$1 ") +
-                    "км"}
-                </p>
-                <p>
-                  {"Скорость относительно Земли: ≈" +
-                    (+closure.relative_velocity.kilometers_per_second).toFixed(3) +
-                    " " +
-                    "км/с"}{" "}
-                </p>
-                <p>
-                  {`Летит по орбите вокруг ${
-                    bodies.hasOwnProperty(closure.orbiting_body)
-                      ? bodies[`${closure.orbiting_body}`]
-                      : closure.orbiting_body
-                  }`}
-                </p>
-              </div>
-            );
-          })}
+          {closures &&
+            closures!.map((closure) => {
+              return (
+                <div
+                  key={closure.epoch_date_close_approach}
+                  className="m-4 border-2 border-[--myOrange] p-4"
+                >
+                  <p>
+                    {"Время максимального сближения с Землей: " + closure.close_approach_date_full}
+                  </p>
+                  <p>
+                    {"Расстояние до Земли: ≈" +
+                      Math.round(+closure.miss_distance.kilometers)
+                        .toString()
+                        .replace(/(\d)(?=(\d{3})+$)/g, "$1 ") +
+                      "км"}
+                  </p>
+                  <p>
+                    {"Скорость относительно Земли: ≈" +
+                      (+closure.relative_velocity.kilometers_per_second).toFixed(3) +
+                      " " +
+                      "км/с"}{" "}
+                  </p>
+                  <p>
+                    {`Летит по орбите вокруг ${
+                      bodies.hasOwnProperty(closure.orbiting_body)
+                        ? bodies[`${closure.orbiting_body}`]
+                        : closure.orbiting_body
+                    }`}
+                  </p>
+                </div>
+              );
+            })}
         </div>
       </main>
     </>
