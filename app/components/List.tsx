@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import getData from "../actions/getData";
 import { IFetchData, NearEarthObject } from "../types";
 import Card from "./Card";
-import Cart from "./Cart";
 import sortAsteroid from "../actions/sortAsteroids";
 import Spinner from "./Spinner";
 
@@ -17,7 +16,6 @@ const List = ({ data }: ListParams) => {
   const [onlyHazard, setOnlyHazard] = useState(false);
   const [nextPage, setNextPage] = useState(data!.links.next);
   const [isLoading, setIsLoading] = useState(false);
-  const [cart, setCart] = useState<string[]>([]);
   const [asteroids, setAsteroids] = useState<NearEarthObject[]>(
     sortAsteroid(Object.values(data!.near_earth_objects)[0]),
   );
@@ -53,7 +51,7 @@ const List = ({ data }: ListParams) => {
   };
 
   return (
-    <main className="relative flex justify-center">
+    <main className="relative m-auto flex">
       <section className="z-10">
         <div className="mb-4 flex w-[400px] flex-col items-start">
           <p className="text-[28px]">Ближайшие подлёты астероидов</p>
@@ -96,8 +94,6 @@ const List = ({ data }: ListParams) => {
                 asteroid={asteroid}
                 showParam={showParam}
                 key={asteroid.id}
-                cart={cart}
-                setCart={setCart}
               />
             ))}
           {isLoading ? (
@@ -115,12 +111,14 @@ const List = ({ data }: ListParams) => {
           )}
         </div>
       </section>
-      <section className="fixed right-[300px] top-[140px] ">
-        <Cart
-          data={data}
-          cart={cart}
-        />
-      </section>
+      {/* <section className="fixed right-[300px] top-[140px] ">
+        <ListProvider>
+          <Cart
+            data={data}
+            cart={cart}
+          />
+        </ListProvider>
+      </section> */}
     </main>
   );
 };

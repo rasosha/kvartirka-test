@@ -4,15 +4,16 @@ import { Dispatch, SetStateAction } from "react";
 import getCorrectSuffix from "../actions/getCorrectSuffix";
 import getDate from "../actions/getDate";
 import Link from "next/link";
+import { useListContext } from "../Context";
 
 type CardParams = {
   asteroid: NearEarthObject;
-  showParam: "km" | "moon";
-  cart: string[];
-  setCart: Dispatch<SetStateAction<string[]>>;
+  showParam?: "km" | "moon";
 };
 
-const Card = ({ asteroid, showParam, cart, setCart }: CardParams) => {
+const Card = ({ asteroid, showParam = "km" }: CardParams) => {
+  const { listState, setListState } = useListContext();
+  const cart = listState.map((asteroid) => asteroid.id);
   const date = getDate(asteroid.close_approach_data[0].close_approach_date_full);
   const distance = asteroid.close_approach_data[0].miss_distance;
   const diameter = Math.ceil(
@@ -24,12 +25,10 @@ const Card = ({ asteroid, showParam, cart, setCart }: CardParams) => {
 
   const handleOrder = (id: string) => {
     if (isInCart) {
-      const newCart = cart.filter((str) => str !== id);
-      localStorage.setItem("cart", JSON.stringify(newCart));
-      setCart(newCart);
+      const newListState = listState.filter((asteroid) => asteroid.id !== id);
+      setListState(newListState);
     } else {
-      setCart((prevState) => [...prevState, id]);
-      localStorage.setItem("cart", JSON.stringify([...cart, id]));
+      setListState((prevState) => [...listState, asteroid]);
     }
   };
 
