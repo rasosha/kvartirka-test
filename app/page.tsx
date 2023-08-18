@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <>
       <section className="fixed right-[300px] top-[140px] ">
-        <Cart data={data} />
+        <Cart />
       </section>
       <List data={data} />
     </>
