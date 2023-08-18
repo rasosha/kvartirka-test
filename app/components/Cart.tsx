@@ -40,22 +40,20 @@ const Cart = ({ data, cart }: CartProps) => {
   }, [asteroids, cart, data]);
 
   return (
-    <>
-      <div className="flex h-[161px] w-[150px] flex-col rounded-[24px] bg-[#232526]">
-        <p className="p-4 pb-0 text-[20px]">Корзина</p>
-        <p className="p-4 pt-0">
-          {getCorrectSuffix(cart?.length, ["астероид", "астероида", "астероидов"])}
-        </p>
-        <Link
-          href={isActive ? { pathname: "/cart", query: { asteroid: asteroids } } : ""}
-          className={`mt-4 self-center rounded-[24px] px-[16px] py-[8px] text-[16px] font-bold capitalize ${
-            isActive ? "bg-[--myOrange]" : "bg-gray-600 hover:cursor-default"
-          }`}
-        >
-          отправить
-        </Link>
-      </div>
-    </>
+    <section className="flex h-[161px] w-[150px] flex-col rounded-[24px] bg-[#232526]">
+      <p className="p-4 pb-0 text-[20px]">Корзина</p>
+      <p className="p-4 pt-0">
+        {getCorrectSuffix(cart?.length, ["астероид", "астероида", "астероидов"])}
+      </p>
+      {/* <Link
+        href={isActive ? { pathname: "/cart", query: { asteroid: asteroids } } : ""}
+        className={`mt-4 self-center rounded-[24px] px-[16px] py-[8px] text-[16px] font-bold capitalize ${
+          isActive ? "bg-[--myOrange]" : "bg-gray-600 hover:cursor-default"
+        }`}
+      >
+        отправить
+      </Link> */}
+    </section>
   );
 };
 

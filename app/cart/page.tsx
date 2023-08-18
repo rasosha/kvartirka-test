@@ -17,7 +17,7 @@ export default async function Cart({ searchParams }: { searchParams: string }) {
 
   return (
     <>
-      <main className="flex flex-col items-center">
+      {/* <main className="flex flex-col items-center">
         <p className="text-[28px] font-bold">Заказ отправлен!</p>
         <Link
           href={"/"}
@@ -70,7 +70,7 @@ export default async function Cart({ searchParams }: { searchParams: string }) {
               </div>
             ))}
         </div>
-      </main>
+      </main> */}
       <footer className="fixed bottom-0 flex w-screen justify-center">
         <p>© Все права и планета защищены</p>
       </footer>
