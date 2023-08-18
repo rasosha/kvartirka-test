@@ -20,7 +20,6 @@ export default async function Cart({ searchParams }: { searchParams: string }) {
     <>
       <main className="flex flex-col items-center">
         <p className="text-[28px] font-bold">Заказ отправлен!</p>
-        <p>{searchParams}</p>
         <Link
           href={"/"}
           className="p-4"
