@@ -12,6 +12,7 @@ type CartProps = {
 };
 
 export default async function Cart({ searchParams }: { searchParams: string }) {
+  console.log("searchParams:>>", searchParams);
   const arr = Object.values(searchParams)[0];
   const parcedArr = arr ? JSON.parse(arr) : arr;
 
