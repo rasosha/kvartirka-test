@@ -41,7 +41,9 @@ const List = ({ data }: { data: IFetchData | undefined }) => {
   const handleScroll = () => {
     const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
     if (scrollHeight - scrollTop - clientHeight < 200) {
-      setIsLoading(true);
+      if (!isLoading) {
+        setIsLoading(true);
+      }
     }
   };
 
