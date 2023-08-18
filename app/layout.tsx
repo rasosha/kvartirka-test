@@ -1,6 +1,5 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ListProvider } from "./Context";
 import { Passion_One } from "next/font/google";
@@ -16,8 +15,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <ListProvider>
-        <body className="flex flex-col bg-[#000] text-[#fff]">
-          <header className={`self-start px-4 ${passion.className}`}>
+        <body className="flex flex-col gap-8 bg-[#000] text-[#fff]">
+          <header className={`self-start px-4  ${passion.className}`}>
             <Link href={"/"}>
               <h1 className="text-[32px] text-[--myOrange] hover:text-red-100">ARMAGEDDON 2023</h1>
               <div className="font-[helvetica]">
@@ -26,15 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </Link>
           </header>
-          <section className="fixed left-0 top-[138px] h-[620px] w-[400px]">
-            <Image
-              alt=""
-              src={"/planeta_lg.jpg"}
-              width={400}
-              height={620}
-              priority
-            />
-          </section>
+          <section className="lg:bg-planeta_lg md:bg-planeta_md sm:bg-planeta_sm fixed left-0 top-[138px] -z-10 h-[620px] w-[400px] bg-no-repeat sm:h-[436px] sm:w-[48px] md:h-[436px] md:w-[304px]"></section>
           <>{children}</>
         </body>
       </ListProvider>

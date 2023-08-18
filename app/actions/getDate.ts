@@ -15,12 +15,12 @@ const getDate = (date: string) => {
     "Декабря",
   ];
 
-  return `${newDate.getDate()} ${russianMonths[newDate.getMonth()]} ${newDate.getFullYear()}
+  return `${newDate.getDate()} ${
+    russianMonths[newDate.getMonth()]
+  } ${newDate.getFullYear()} ${newDate.getHours().toString().padStart(2, "0")}:${newDate
+    .getMinutes()
+    .toString()
+    .padStart(2, "0")}
   `;
-  // (${newDate
-  //   .getHours()
-  //   .toString()
-  //   .padStart(2, "0")}:${newDate.getMinutes().toString().padStart(2, "0")})
-  // `;
 };
 export default getDate;

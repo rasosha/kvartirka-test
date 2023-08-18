@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { NearEarthObject } from "../types";
-import { Dispatch, SetStateAction } from "react";
 import getCorrectSuffix from "../actions/getCorrectSuffix";
 import getDate from "../actions/getDate";
 import Link from "next/link";
@@ -34,7 +33,7 @@ const Element = ({ asteroid, showParam = "km", isOdered = true }: CardParams) =>
   };
 
   return (
-    <div className={`w-[400px] bg-black ${isOdered ? "cursor-default" : ""}`}>
+    <div className={`${isOdered ? "cursor-default" : ""}`}>
       {isOdered ? (
         <Link href={`/asteroid/${asteroid.id}`}>
           <p className="text-[24px] font-bold hover:text-[--myOrange] hover:underline">{date}</p>

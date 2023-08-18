@@ -1,8 +1,5 @@
 "use client";
-
-import { useEffect } from "react";
 import getCorrectSuffix from "../actions/getCorrectSuffix";
-import { IFetchData, NearEarthObject } from "../types";
 import Link from "next/link";
 import { useListContext } from "../Context";
 
@@ -11,14 +8,16 @@ const Cart = () => {
   const cart = listState.map((asteroid) => asteroid.id);
 
   return (
-    <section className="flex h-[161px] w-[150px] flex-col rounded-[24px] bg-[#232526]">
-      <p className="p-4 pb-0 text-[20px]">Корзина</p>
-      <p className="p-4 pt-0">
-        {getCorrectSuffix(cart?.length, ["астероид", "астероида", "астероидов"])}
-      </p>
+    <section className="flex flex-col gap-8 rounded-[24px] bg-[#232526] p-4 sm:flex-row sm:justify-between sm:rounded-none">
+      <div>
+        <p className="pb-0 text-[20px]">Корзина</p>
+        <p className="">
+          {getCorrectSuffix(cart?.length, ["астероид", "астероида", "астероидов"])}
+        </p>
+      </div>
       <Link
         href={listState.length ? "/order" : ""}
-        className={`mt-4 self-center rounded-[24px] px-[16px] py-[8px] text-[16px] font-bold capitalize ${
+        className={`self-center rounded-[24px] px-[16px] py-[8px] text-[16px] font-bold capitalize sm:mx-4 ${
           cart.length ? "bg-[--myOrange]" : "bg-gray-600 hover:cursor-default"
         }`}
       >

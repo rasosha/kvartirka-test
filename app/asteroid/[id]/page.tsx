@@ -1,5 +1,6 @@
 import Link from "next/link";
 import getAsteroid from "../../actions/getAsteroid";
+import getDate from "../../actions/getDate";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const asteroid = await getAsteroid(params.id);
@@ -48,7 +49,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 className="m-4 border-2 border-[--myOrange] p-4"
               >
                 <p>
-                  {"Время максимального сближения с Землей: " + closure.close_approach_date_full}
+                  {"Время максимального сближения: " + getDate(closure.close_approach_date_full)}
                 </p>
                 <p>
                   {"Расстояние до Земли: ≈" +

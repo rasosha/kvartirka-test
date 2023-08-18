@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import getData from "../actions/getData";
 import { IFetchData, NearEarthObject } from "../types";
@@ -7,11 +6,7 @@ import Element from "./Element";
 import sortAsteroid from "../actions/sortAsteroids";
 import Spinner from "./Spinner";
 
-type ListParams = {
-  data: IFetchData | undefined;
-};
-
-const List = ({ data }: ListParams) => {
+const List = ({ data }: { data: IFetchData | undefined }) => {
   const [showParam, setShowParam] = useState<"km" | "moon">("km");
   const [onlyHazard, setOnlyHazard] = useState(false);
   const [nextPage, setNextPage] = useState(data!.links.next);
@@ -26,7 +21,6 @@ const List = ({ data }: ListParams) => {
         const newData = await getData(nextPage);
         if (newData) {
           const NEO = sortAsteroid(Object.values(newData["near_earth_objects"])[0]);
-          // console.log("downloaded :>>", Object.keys(newData.near_earth_objects)[0]);
           setNextPage(newData["links"]["next"]);
           setAsteroids((prevState) => [...prevState, ...NEO]);
         }
@@ -51,67 +45,64 @@ const List = ({ data }: ListParams) => {
   };
 
   return (
-    <main className="relative m-auto flex">
-      <section className="z-10">
-        <div className="mb-4 flex w-[400px] flex-col items-start">
-          <p className="text-[28px]">Ближайшие подлёты астероидов</p>
-          <ul className="flex list-none gap-4 no-underline">
-            <li
-              onClick={() => setShowParam("km")}
-              className={`cursor-pointer${showParam === "km" ? " underline" : ""}`}
-            >
-              в километрах
-            </li>
-            <li>|</li>
-            <li
-              onClick={() => setShowParam("moon")}
-              className={`cursor-pointer${showParam === "moon" ? " underline" : ""}`}
-            >
-              в лунных орбитах
-            </li>
-          </ul>
-          <label className="my-2">
-            <input
-              type="checkbox"
-              className="mr-2"
-              checked={onlyHazard}
-              onChange={() => setOnlyHazard((prevState) => !prevState)}
+    <>
+      <p className="text-[28px] font-[700] leading-[36px]">Ближайшие подлёты астероидов</p>
+      <ul className="flex list-none gap-4 no-underline">
+        <li
+          onClick={() => setShowParam("km")}
+          className={`cursor-pointer${showParam === "km" ? " underline" : ""}`}
+        >
+          в километрах
+        </li>
+        <li>|</li>
+        <li
+          onClick={() => setShowParam("moon")}
+          className={`cursor-pointer${showParam === "moon" ? " underline" : ""}`}
+        >
+          в лунных орбитах
+        </li>
+      </ul>
+      <label className="my-2">
+        <input
+          type="checkbox"
+          className="mr-2"
+          checked={onlyHazard}
+          onChange={() => setOnlyHazard((prevState) => !prevState)}
+        />
+        Показать только опасные
+      </label>
+      {/* </section> */}
+      <div className="flex flex-col gap-6">
+        {asteroids
+          .filter((asteroid) => {
+            if (onlyHazard) {
+              return asteroid.is_potentially_hazardous_asteroid === true;
+            } else {
+              return asteroid;
+            }
+          })
+          .map((asteroid) => (
+            <Element
+              asteroid={asteroid}
+              showParam={showParam}
+              key={asteroid.id}
             />
-            Показать только опасные
-          </label>
-        </div>
-        <div className="flex flex-col gap-6">
-          {asteroids
-            .filter((asteroid) => {
-              if (onlyHazard) {
-                return asteroid.is_potentially_hazardous_asteroid === true;
-              } else {
-                return asteroid;
-              }
-            })
-            .map((asteroid) => (
-              <Element
-                asteroid={asteroid}
-                showParam={showParam}
-                key={asteroid.id}
-              />
-            ))}
-          {isLoading ? (
-            <div className="flex flex-col items-center">
-              <Spinner />
-              <p className="self-center pb-6">Загрузка...</p>
-            </div>
-          ) : (
-            <button
-              onClick={() => setIsLoading(true)}
-              className="mt-4 h-[48px] self-center rounded-[24px] bg-[--myOrange] px-[16px] py-[8px] text-[16px] font-bold capitalize"
-            >
-              Загрузить ещё
-            </button>
-          )}
-        </div>
-      </section>
-    </main>
+          ))}
+        {isLoading ? (
+          <div className="flex flex-col items-center">
+            <Spinner />
+            <p className="self-center pb-6">Загрузка...</p>
+          </div>
+        ) : (
+          <button
+            onClick={() => setIsLoading(true)}
+            className="mt-4 h-[48px] self-center rounded-[24px] bg-[--myOrange] px-[16px] py-[8px] text-[16px] font-bold capitalize"
+          >
+            Загрузить ещё
+          </button>
+        )}
+      </div>
+    </>
   );
 };
 
