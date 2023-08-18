@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import getData from "../actions/getData";
 import { IFetchData, NearEarthObject } from "../types";
-import Card from "./Card";
+import Element from "./Element";
 import sortAsteroid from "../actions/sortAsteroids";
 import Spinner from "./Spinner";
 
@@ -90,7 +90,7 @@ const List = ({ data }: ListParams) => {
               }
             })
             .map((asteroid) => (
-              <Card
+              <Element
                 asteroid={asteroid}
                 showParam={showParam}
                 key={asteroid.id}
@@ -111,14 +111,6 @@ const List = ({ data }: ListParams) => {
           )}
         </div>
       </section>
-      {/* <section className="fixed right-[300px] top-[140px] ">
-        <ListProvider>
-          <Cart
-            data={data}
-            cart={cart}
-          />
-        </ListProvider>
-      </section> */}
     </main>
   );
 };

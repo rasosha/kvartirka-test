@@ -9,9 +9,10 @@ import { useListContext } from "../Context";
 type CardParams = {
   asteroid: NearEarthObject;
   showParam?: "km" | "moon";
+  isOdered?: boolean;
 };
 
-const Card = ({ asteroid, showParam = "km" }: CardParams) => {
+const Element = ({ asteroid, showParam = "km", isOdered = true }: CardParams) => {
   const { listState, setListState } = useListContext();
   const cart = listState.map((asteroid) => asteroid.id);
   const date = getDate(asteroid.close_approach_data[0].close_approach_date_full);
@@ -28,15 +29,20 @@ const Card = ({ asteroid, showParam = "km" }: CardParams) => {
       const newListState = listState.filter((asteroid) => asteroid.id !== id);
       setListState(newListState);
     } else {
-      setListState((prevState) => [...listState, asteroid]);
+      setListState((prevState) => [...prevState, asteroid]);
     }
   };
 
   return (
-    <div className="w-[400px] bg-black">
-      <Link href={`/asteroid/${asteroid.id}`}>
-        <p className="text-[24px] font-bold hover:underline">{date}</p>
-      </Link>
+    <div className={`w-[400px] bg-black ${isOdered ? "cursor-default" : ""}`}>
+      {isOdered ? (
+        <Link href={`/asteroid/${asteroid.id}`}>
+          <p className="text-[24px] font-bold hover:text-[--myOrange] hover:underline">{date}</p>
+        </Link>
+      ) : (
+        <p className={`text-[24px] font-bold ${isOdered ? "hover:underline" : ""}`}>{date}</p>
+      )}
+
       <div className="flex items-center">
         <div>
           <p className="flex flex-col items-center">
@@ -66,26 +72,35 @@ const Card = ({ asteroid, showParam = "km" }: CardParams) => {
           height={diameter < 50 ? 24 : 40}
           className="flex-0 mx-4"
         />
-        <Link href={`/asteroid/${asteroid.id}`}>
+        {isOdered ? (
+          <Link href={`/asteroid/${asteroid.id}`}>
+            <div className="flex flex-col items-start">
+              <p className="border-b-[1px] font-bold">{asteroid.name}</p>
+              <p className="text-[12px]">Ø {diameter} м</p>
+            </div>
+          </Link>
+        ) : (
           <div className="flex flex-col items-start">
             <p className="border-b-[1px] font-bold">{asteroid.name}</p>
             <p className="text-[12px]">Ø {diameter} м</p>
           </div>
-        </Link>
+        )}
       </div>
       <div className="flex gap-4">
-        <button
-          className={`rounded-[16px] bg-[#F8660026] px-[11px] py-[2px] text-[11px] font-bold uppercase hover:bg-[--myOrange] hover:text-[#fff] ${
-            isInCart ? "text-[#F5DED9]" : "text-[--myOrange]"
-          }`}
-          onClick={() => handleOrder(asteroid.id)}
-        >
-          {isInCart ? "в корзине" : "заказать"}
-        </button>
+        {isOdered && (
+          <button
+            className={`rounded-[16px] bg-[#F8660026] px-[11px] py-[2px] text-[11px] font-bold uppercase hover:bg-[--myOrange] hover:text-[#fff] ${
+              isInCart ? "text-[#F5DED9]" : "text-[--myOrange]"
+            }`}
+            onClick={() => handleOrder(asteroid.id)}
+          >
+            {isInCart ? "в корзине" : "заказать"}
+          </button>
+        )}
         <p className="flex">{asteroid.is_potentially_hazardous_asteroid ? "⚠️Опасен" : ""}</p>
       </div>
     </div>
   );
 };
 
-export default Card;
+export default Element;

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { Inter } from "next/font/google";
 
 const config: Config = {
   content: [
@@ -18,6 +19,9 @@ const config: Config = {
       md: "1024px",
       lg: "1356px",
     },
+  },
+  fontFamily: {
+    helvetica: ["Helvetica"],
   },
   plugins: [],
 };

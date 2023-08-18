@@ -6,17 +6,9 @@ import { IFetchData, NearEarthObject } from "../types";
 import Link from "next/link";
 import { useListContext } from "../Context";
 
-type CartProps = {
-  data: IFetchData | undefined;
-};
-
-const Cart = ({ data }: CartProps) => {
-  const { listState, setListState } = useListContext();
+const Cart = () => {
+  const { listState } = useListContext();
   const cart = listState.map((asteroid) => asteroid.id);
-
-  useEffect(() => {
-    console.log("listState:>>", cart.length);
-  }, [listState]);
 
   return (
     <section className="flex h-[161px] w-[150px] flex-col rounded-[24px] bg-[#232526]">
@@ -25,7 +17,7 @@ const Cart = ({ data }: CartProps) => {
         {getCorrectSuffix(cart?.length, ["астероид", "астероида", "астероидов"])}
       </p>
       <Link
-        href={"/order"}
+        href={listState.length ? "/order" : ""}
         className={`mt-4 self-center rounded-[24px] px-[16px] py-[8px] text-[16px] font-bold capitalize ${
           cart.length ? "bg-[--myOrange]" : "bg-gray-600 hover:cursor-default"
         }`}
