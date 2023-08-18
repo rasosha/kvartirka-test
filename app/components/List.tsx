@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import getData from "../actions/getData";
 import { IFetchData, NearEarthObject } from "../types";
 import Card from "./Card";
@@ -119,7 +119,6 @@ const List = ({ data }: ListParams) => {
         <Cart
           data={data}
           cart={cart}
-          setCart={setCart}
         />
       </section>
     </main>

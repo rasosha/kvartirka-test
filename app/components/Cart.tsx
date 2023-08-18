@@ -6,7 +6,6 @@ import Link from "next/link";
 type CartProps = {
   data: IFetchData | undefined;
   cart: string[];
-  setCart: Dispatch<SetStateAction<string[]>>;
 };
 
 const Cart = ({ data, cart }: CartProps) => {
