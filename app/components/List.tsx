@@ -29,7 +29,7 @@ const List = ({ data }: { data: IFetchData | undefined }) => {
       };
       getNewData();
     }
-  }, [isLoading, nextPage]);
+  }, [isLoading]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
