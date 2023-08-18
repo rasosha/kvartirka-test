@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <Link href={"/"}>{"❰ Назад к списку"}</Link>
         <div className="flex items-center">
           <div className="flex flex-col items-center">
-            <p className="border-b-[1px] font-bold">{asteroid!.name.replace(/[()]/g, "")}</p>
+            <p className="border-b-[1px] text-[24px] font-bold">{asteroid!.name}</p>
             <p className="text-[12px]">Ø {diameter} м</p>
           </div>
         </div>

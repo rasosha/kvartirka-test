@@ -69,7 +69,7 @@ const Card = ({ asteroid, showParam, cart, setCart }: CardParams) => {
         />
         <Link href={`/asteroid/${asteroid.id}`}>
           <div className="flex flex-col items-start">
-            <p className="border-b-[1px] font-bold">{asteroid.name.replace(/[()]/g, "")}</p>
+            <p className="border-b-[1px] font-bold">{asteroid.name}</p>
             <p className="text-[12px]">Ø {diameter} м</p>
           </div>
         </Link>
