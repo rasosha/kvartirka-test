@@ -3,5 +3,6 @@ import List from "./components/List";
 
 export default async function Home() {
   const data = await getData();
+  console.log("mydata:>>", data);
   return data ? <List data={data} /> : <div>1</div>;
 }
