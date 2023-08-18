@@ -9,7 +9,9 @@ import Spinner from "./Spinner";
 const List = ({ data }: { data: IFetchData | undefined }) => {
   const [showParam, setShowParam] = useState<"km" | "moon">("km");
   const [onlyHazard, setOnlyHazard] = useState(false);
-  const [nextPage, setNextPage] = useState(data!.links.next);
+  const [nextPage, setNextPage] = useState(
+    data!.links.next.replace("http://api.nasa", "https://api.nasa"),
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [asteroids, setAsteroids] = useState<NearEarthObject[]>(
     sortAsteroid(Object.values(data!.near_earth_objects)[0]),
@@ -22,7 +24,6 @@ const List = ({ data }: { data: IFetchData | undefined }) => {
         if (newData) {
           const NEO = sortAsteroid(Object.values(newData["near_earth_objects"])[0]);
           const next = newData["links"]["next"].replace("http://api.nasa", "https://api.nasa");
-          console.log("next:>>", next);
           setNextPage(next);
           setAsteroids((prevState) => [...prevState, ...NEO]);
         }
