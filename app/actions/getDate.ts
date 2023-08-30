@@ -17,9 +17,9 @@ const getDate = (epochTimestamp: number) => {
   ];
 
   return `${date.getDate()} ${russianMonths[date.getMonth()]} ${date.getFullYear()} ${date
-    .getHours()
+    .getUTCHours()
     .toString()
-    .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}
+    .padStart(2, "0")}:${date.getUTCMinutes().toString().padStart(2, "0")} UTC
   `;
 };
 export default getDate;
