@@ -1,5 +1,5 @@
 const getDate = (date: string) => {
-  const newDate = new Date(date);
+  const newDate = new Date(date.replace(/-/g, "/"));
   const russianMonths = [
     "Января",
     "Февраля",
@@ -23,4 +23,5 @@ const getDate = (date: string) => {
     .padStart(2, "0")}
   `;
 };
+
 export default getDate;
