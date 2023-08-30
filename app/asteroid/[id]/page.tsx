@@ -49,7 +49,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 className="m-4 border-2 border-[--myOrange] p-4"
               >
                 <p>
-                  {"Время максимального сближения: " + getDate(closure.close_approach_date_full)}
+                  {"Время максимального сближения: " + getDate(closure.epoch_date_close_approach)}
                 </p>
                 <p>
                   {"Расстояние до Земли: ≈" +

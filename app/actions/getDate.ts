@@ -1,5 +1,6 @@
-const getDate = (date: string) => {
-  const newDate = new Date(date.replace(/-/g, "/"));
+const getDate = (epochTimestamp: number) => {
+  const date = new Date(epochTimestamp);
+
   const russianMonths = [
     "Января",
     "Февраля",
@@ -15,13 +16,10 @@ const getDate = (date: string) => {
     "Декабря",
   ];
 
-  return `${newDate.getDate()} ${
-    russianMonths[newDate.getMonth()]
-  } ${newDate.getFullYear()} ${newDate.getHours().toString().padStart(2, "0")}:${newDate
-    .getMinutes()
+  return `${date.getDate()} ${russianMonths[date.getMonth()]} ${date.getFullYear()} ${date
+    .getHours()
     .toString()
-    .padStart(2, "0")}
+    .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}
   `;
 };
-
 export default getDate;

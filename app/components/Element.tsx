@@ -14,7 +14,7 @@ type CardParams = {
 const Element = ({ asteroid, showParam = "km", isOdered = true }: CardParams) => {
   const { listState, setListState } = useListContext();
   const cart = listState.map((asteroid) => asteroid.id);
-  const date = getDate(asteroid.close_approach_data[0].close_approach_date_full);
+  const date = getDate(asteroid.close_approach_data[0].epoch_date_close_approach);
   const distance = asteroid.close_approach_data[0].miss_distance;
   const diameter = Math.ceil(
     (asteroid.estimated_diameter.meters.estimated_diameter_min +
