@@ -3,11 +3,6 @@
 import Element from "../components/Element";
 import Link from "next/link";
 import { useListContext } from "../Context";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Order",
-};
 
 export default function Cart() {
   const { listState, setListState } = useListContext();
