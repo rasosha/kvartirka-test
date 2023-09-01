@@ -2,6 +2,13 @@ import Link from "next/link";
 import getAsteroid from "../../actions/getAsteroid";
 import getDate from "../../actions/getDate";
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const asteroid = await getAsteroid(params.id);
+  return {
+    title: asteroid?.name.replaceAll(/\(|\)/g, ""),
+  };
+}
+
 export default async function Page({ params }: { params: { id: string } }) {
   const asteroid = await getAsteroid(params.id);
   const closures = asteroid?.close_approach_data.sort((a, b) => {

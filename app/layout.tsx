@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </Link>
           </header>
-          <section className="lg:bg-planeta_lg md:bg-planeta_md sm:bg-planeta_sm fixed left-0 top-[138px] -z-10 h-[620px] w-[400px] bg-no-repeat sm:h-[436px] sm:w-[48px] md:h-[436px] md:w-[304px]"></section>
+          <section className="fixed left-0 top-[138px] -z-10 h-[620px] w-[400px] bg-no-repeat sm:h-[436px] sm:w-[48px] sm:bg-planeta_sm md:h-[436px] md:w-[304px] md:bg-planeta_md lg:bg-planeta_lg"></section>
           <>{children}</>
         </body>
       </ListProvider>
